@@ -1,6 +1,5 @@
 ﻿using Gestion_CyberCafe.ModelsR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 
 namespace Gestion_CyberCafe.Data
 {
@@ -15,14 +14,7 @@ namespace Gestion_CyberCafe.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // ❌ STOP CASCADE PROBLEM
-            foreach (var fk in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetForeignKeys()))
-            {
-                fk.DeleteBehavior = DeleteBehavior.NoAction;
-            }
-
-            // 💰 PRECISION
+            // 💰 PRECISION MONEY
             modelBuilder.Entity<Paiement>()
                 .Property(p => p.Montant)
                 .HasPrecision(10, 2);
@@ -30,6 +22,25 @@ namespace Gestion_CyberCafe.Data
             modelBuilder.Entity<Parametre>()
                 .Property(p => p.PrixHeure)
                 .HasPrecision(10, 2);
+
+            // 🔗 SEANCE RELATIONS CLEAN (IMPORTANT)
+            modelBuilder.Entity<Seance>()
+                .HasOne(s => s.Client)
+                .WithMany()
+                .HasForeignKey(s => s.IdClient)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Seance>()
+                .HasOne(s => s.Poste)
+                .WithMany()
+                .HasForeignKey(s => s.IdPoste)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Seance>()
+                .HasOne(s => s.Connexion)
+                .WithMany()
+                .HasForeignKey(s => s.IdConnexion)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         public DbSet<Client> Clients { get; set; }

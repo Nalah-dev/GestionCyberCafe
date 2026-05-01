@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Gestion_CyberCafe.Views.ClientView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <StackPanel Margin="20">
+
+        <TextBlock Text="Nom"/>
+        <TextBox x:Name="txtNom"/>
+
+        <TextBlock Text="Prenom" Margin="0,5"/>
+        <TextBox x:Name="txtPrenom"/>
+
+        <TextBlock Text="Téléphone" Margin="0,5"/>
+        <TextBox x:Name="txtTel"/>
+
+        <Button Content="Ajouter"
+                Margin="0,10"
+                Click="BtnAjouter_Click"/>
+
+    </StackPanel>
+
+</UserControl>

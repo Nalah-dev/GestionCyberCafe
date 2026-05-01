@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Gestion_CyberCafe.ModelsR
 {
@@ -10,12 +9,25 @@ namespace Gestion_CyberCafe.ModelsR
         [Key]
         public int IdSeance { get; set; }
 
-        public TimeSpan HeureDebut { get; set; }
-        public TimeSpan HeureFin { get; set; }
+        // ✔️ DATE + HEURE (pro style)
+        public DateTime HeureDebut { get; set; }
+        public DateTime? HeureFin { get; set; }
+
         public int Prolongation { get; set; }
 
+        // CLIENT
         public int IdClient { get; set; }
+        public Client Client { get; set; }
+
+        // POSTE
         public int IdPoste { get; set; }
+        public Poste Poste { get; set; }
+
+        // CONNEXION
         public int IdConnexion { get; set; }
+        public Connexion Connexion { get; set; }
+
+        // PAIEMENTS
+        public ICollection<Paiement> Paiements { get; set; }
     }
 }

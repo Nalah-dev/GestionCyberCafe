@@ -4,6 +4,7 @@ using Gestion_CyberCafe.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gestion_CyberCafe.Migrations
 {
     [DbContext(typeof(GestionCyberContext))]
-    partial class GestionCyberContextModelSnapshot : ModelSnapshot
+    [Migration("20260430051330_FixSeance")]
+    partial class FixSeance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,6 +61,9 @@ namespace Gestion_CyberCafe.Migrations
                     b.Property<DateTime>("DateConnexion")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("EmployeIdEmploye")
+                        .HasColumnType("int");
+
                     b.Property<TimeSpan>("HeureConnexion")
                         .HasColumnType("time");
 
@@ -67,15 +73,18 @@ namespace Gestion_CyberCafe.Migrations
                     b.Property<int>("IdPoste")
                         .HasColumnType("int");
 
+                    b.Property<int>("PosteIdPoste")
+                        .HasColumnType("int");
+
                     b.Property<string>("Statut")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdConnexion");
 
-                    b.HasIndex("IdEmploye");
+                    b.HasIndex("EmployeIdEmploye");
 
-                    b.HasIndex("IdPoste");
+                    b.HasIndex("PosteIdPoste");
 
                     b.ToTable("Connexions");
                 });
@@ -209,11 +218,11 @@ namespace Gestion_CyberCafe.Migrations
                     b.Property<int?>("ConnexionIdConnexion")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("HeureDebut")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("HeureDebut")
+                        .HasColumnType("time");
 
-                    b.Property<DateTime?>("HeureFin")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("HeureFin")
+                        .HasColumnType("time");
 
                     b.Property<int>("IdClient")
                         .HasColumnType("int");
@@ -251,13 +260,13 @@ namespace Gestion_CyberCafe.Migrations
                 {
                     b.HasOne("Gestion_CyberCafe.ModelsR.Employe", "Employe")
                         .WithMany("Connexions")
-                        .HasForeignKey("IdEmploye")
+                        .HasForeignKey("EmployeIdEmploye")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Gestion_CyberCafe.ModelsR.Poste", "Poste")
                         .WithMany("Connexions")
-                        .HasForeignKey("IdPoste")
+                        .HasForeignKey("PosteIdPoste")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
