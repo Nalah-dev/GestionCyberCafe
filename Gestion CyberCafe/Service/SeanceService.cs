@@ -8,16 +8,17 @@ namespace Gestion_CyberCafe.Services
     public class SeanceService
     {
         private readonly GestionCyberContext _context;
+        private readonly PaiementService _paiementService;
 
         public SeanceService(GestionCyberContext context)
         {
             _context = context;
+            _paiementService = new PaiementService(context);
         }
 
-        // ▶ START SESSION (AUTO Connexion)
+        // ▶ START SESSION
         public void StartSession(int clientId, int posteId)
         {
-            // 👉 maka connexion active farany
             var connexion = _context.Connexions
                 .OrderByDescending(c => c.IdConnexion)
                 .FirstOrDefault();
@@ -43,7 +44,7 @@ namespace Gestion_CyberCafe.Services
             _context.SaveChanges();
         }
 
-        // ⏹ STOP SESSION + CALCUL PRIX
+        // ⏹ STOP SESSION + CALCUL + PAIEMENT
         public decimal StopSession(int idSeance)
         {
             var seance = _context.Seances.Find(idSeance);
@@ -70,6 +71,12 @@ namespace Gestion_CyberCafe.Services
             var poste = _context.Postes.Find(seance.IdPoste);
             if (poste != null)
                 poste.Statut = "Libre";
+
+            // 💳 PAIEMENT CREATION
+            if (total > 0)
+            {
+                _paiementService.CreerPaiement(seance.IdSeance, total);
+            }
 
             _context.SaveChanges();
 

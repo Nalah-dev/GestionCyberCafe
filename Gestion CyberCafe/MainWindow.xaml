@@ -10,10 +10,12 @@
             <Button Content="Clients" Click="BtnClient_Click"/>
             <Button Content="Postes" Click="BtnPoste_Click"/>
             <Button Content="Seance" Click="BtnSeance_Click"/>
+            <Button Content="Caisse" Click="BtnCaisse_Click"/>
         </StackPanel>
 
         <!-- CONTENT -->
         <ContentControl x:Name="MainContent" Margin="10,50,10,10"/>
 
     </Grid>
+  
 </Window>

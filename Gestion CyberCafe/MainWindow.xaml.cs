@@ -22,5 +22,9 @@ namespace Gestion_CyberCafe
         {
             MainContent.Content = new SeanceView();
         }
+        private void BtnCaisse_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new CaisseView();
+        }
     }
 }
